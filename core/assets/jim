@@ -1,0 +1,15 @@
+#!/bin/bash
+
+NODE_PATH=./node_modules/@pnodev/jim-core/core
+COMPOSER_PATH=./vendor/pnodev/jim-core/core
+
+if [ -e "$NODE_PATH/cli.sh" ]; then
+  EXEC_PATH=$NODE_PATH $NODE_PATH/cli.sh "$@"
+elif [ -e "$COMPOSER_PATH/cli.sh" ]; then
+  EXEC_PATH=$COMPOSER_PATH $COMPOSER_PATH/cli.sh "$@"
+else
+  if [ "$1" != "shortlist" ]; then
+    echo -e "\n\033[0;31mThe jim runtime could not be found in this directory.\033[0m\n"
+    exit 1
+  fi
+fi
