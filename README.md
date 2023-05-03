@@ -1,10 +1,11 @@
 
-![Logo](logo.png)
+![Logo](resources/logo.png)
 
 # jim
 
 jim is a highly extensible task runner.
 
+![Screencast](resources/screencast.gif)
 
 ## Concept
 
