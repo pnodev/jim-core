@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source "$EXEC_PATH/colors.sh"
+source "$EXEC_PATH/utils.sh"
 
 if [ -e "./.jimrc" ]; then
   source ./.jimrc
@@ -26,16 +26,6 @@ function setNodeVersion() {
   fi
 }
 
-function _log() {
-  FORMAT_START=
-  FORMAT_END=
-  if [ -v 2 ]; then
-    FORMAT_START=$2
-    FORMAT_END=$COLOR_RESET
-  fi
-  echo -e "$COLOR_DIMMED[jim]$COLOR_RESET $FORMAT_START$1$FORMAT_END"
-}
-
 COMMAND=$1
 
 if [ "$COMMAND" == "shortlist" ]; then
@@ -47,13 +37,13 @@ if [ "$COMMAND" == "shortlist" ]; then
   echo -e "${taskList}"
 # Check core shell scripts
 elif [ -e "$EXEC_PATH/modules/$COMMAND.sh" ]; then
-  DIR_JIM_SCRIPTS=$DIR_JIM_SCRIPTS "$EXEC_PATH/modules/$COMMAND.sh" "$@"
+  DIR_JIM_SCRIPTS=$DIR_JIM_SCRIPTS DIR_CORE=$EXEC_PATH "$EXEC_PATH/modules/$COMMAND.sh" "$@"
 # check user defined shell scripts
 elif [ -v DIR_JIM_SCRIPTS ] && [ -e "$DIR_JIM_SCRIPTS/$COMMAND.sh" ]; then
 	shift
 	# shellcheck disable=SC2098
 	# shellcheck disable=SC2097
-	DIR_JIM_SCRIPTS=$DIR_JIM_SCRIPTS "$DIR_JIM_SCRIPTS/$COMMAND.sh" "$@"
+	DIR_JIM_SCRIPTS=$DIR_JIM_SCRIPTS DIR_CORE=$EXEC_PATH "$DIR_JIM_SCRIPTS/$COMMAND.sh" "$@"
 # check core node scripts
 elif [ -e "$EXEC_PATH/modules/$COMMAND.js" ]; then
 	setNodeVersion
