@@ -14,6 +14,16 @@ function _log() {
   echo -e "$COLOR_DIMMED[jim]$COLOR_RESET $FORMAT_START$1$FORMAT_END"
 }
 
+function _ask() {
+  read -p "$COLOR_DIMMED[jim]$COLOR_RESET $COLOR_CYAN$1$COLOR_RESET $COLOR_YELLOW[y/n]$COLOR_RESET" -n 1 -r
+  echo ""
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
 function setNodeVersion() {
   # abort if no NODE_VERSION has been set
   if [ ! -v NODE_VERSION ]; then
