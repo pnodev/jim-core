@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ -e "./.jimrc" ]; then
+  source ./.jimrc
+fi
+
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 source "${SCRIPT_DIR}/colors.sh"
