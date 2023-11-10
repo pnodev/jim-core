@@ -29,8 +29,8 @@ function _ask() {
 }
 
 function setNodeVersion() {
-  # abort if no NODE_VERSION has been set
-  if [ ! -v NODE_VERSION ]; then
+  # abort if node version has already been set in current session or no NODE_VERSION has been set at all
+  if [ "$JIM_NODE_VERSION_HAS_BEEN_SET" = true ] || [ ! -v NODE_VERSION ]; then
     return
   fi
 
@@ -39,6 +39,7 @@ function setNodeVersion() {
     source "$NVM_PATH"
     nvm use --delete-prefix "${NODE_VERSION}" >/dev/null
     _log "Using node $(node -v)" $COLOR_YELLOW
+    export JIM_NODE_VERSION_HAS_BEEN_SET=true
   else
     echo ""
     _log " ⚠️  It looks like the nvm command is not installed on your system." $COLOR_RED
