@@ -18,6 +18,32 @@ function _log() {
   echo -e "${COLOR_DIMMED}[jim]${COLOR_RESET} ${FORMAT_START}${1}${FORMAT_END}"
 }
 
+function _reportExecutionTime() {
+  _log "⚡ Done in $(bc -l <<< "scale=2; $1/1000" | sed 's/^\./0./')s" "$COLOR_YELLOW$COLOR_DIMMED"
+}
+
+function _announceTaskStart() {
+  _log "🚧 $1 ${COLOR_DIMMED}[$0]" "$COLOR_CYAN"
+}
+
+function _announceTaskEnd() {
+  _log "💪 $1" "$COLOR_CYAN"
+}
+
+function _invoke() {
+  COMMAND=$1
+  # Check core shell scripts
+  if [ -e "$EXEC_PATH/modules/$COMMAND.sh" ]; then
+    DIR_JIM_SCRIPTS=$DIR_JIM_SCRIPTS DIR_CORE=$EXEC_PATH "$EXEC_PATH/modules/$COMMAND.sh" "$@"
+  # check user defined shell scripts
+  elif [ -v DIR_JIM_SCRIPTS ] && [ -e "$DIR_JIM_SCRIPTS/$COMMAND.sh" ]; then
+    shift
+    # shellcheck disable=SC2098
+    # shellcheck disable=SC2097
+    DIR_JIM_SCRIPTS=$DIR_JIM_SCRIPTS DIR_CORE=$EXEC_PATH "$DIR_JIM_SCRIPTS/$COMMAND.sh" "$@"
+  fi
+}
+
 function _ask() {
   read -p "${COLOR_DIMMED}[jim]${COLOR_RESET} ${COLOR_CYAN}${1}${COLOR_RESET} ${COLOR_YELLOW}[y/n]${COLOR_RESET}" -n 1 -r
   echo ""
