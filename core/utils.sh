@@ -41,9 +41,9 @@ function _box() {
       BORDER="${BORDER}─"
   done
 
-  echo -e "${COLOR_YELLOW}┌${BORDER}┐"
-  echo -e "${COLOR_YELLOW}│ $1 │"
-  echo -e "${COLOR_YELLOW}└${BORDER}┘"
+  echo -e "${COLOR_YELLOW}┌${BORDER}┐${COLOR_RESET}"
+  echo -e "${COLOR_YELLOW}│ $1 │${COLOR_RESET}"
+  echo -e "${COLOR_YELLOW}└${BORDER}┘${COLOR_RESET}"
 }
 
 function _invoke() {
