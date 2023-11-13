@@ -30,6 +30,22 @@ function _announceTaskEnd() {
   _log "💪 $1" "$COLOR_CYAN"
 }
 
+function _box() {
+  BORDER=""
+  TEXT=$1
+  COUNT=${#TEXT}
+  COUNT=$((COUNT + 2))
+  # shellcheck disable=SC2034
+  for i in $(seq 1 $COUNT)
+  do
+      BORDER="${BORDER}─"
+  done
+
+  echo -e "${COLOR_YELLOW}┌${BORDER}┐"
+  echo -e "${COLOR_YELLOW}│ $1 │"
+  echo -e "${COLOR_YELLOW}└${BORDER}┘"
+}
+
 function _invoke() {
   COMMAND=$1
   # Check core shell scripts
