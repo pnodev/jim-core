@@ -17,8 +17,27 @@ echo ""
 
 echo -e " Installed Version: ${COLOR_CYAN}$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' "${SCRIPT_DIR}"/../../package.json)${COLOR_RESET}"
 
-COMMANDS_CORE=$(ls $SCRIPT_DIR/ | grep '.sh\|.js'$ | cut -f 1 -d .)
-COMMANDS_USER=$(ls $DIR_JIM_SCRIPTS | grep '.sh\|.js'$ | cut -f 1 -d .)
+COMMANDS_CORE=""
+for file in "$EXEC_PATH"/modules/*.sh
+do
+  if [ "$COMMANDS_CORE" == "" ]
+  then
+    COMMANDS_CORE="$(basename "$file" ".sh")"
+  else
+    COMMANDS_CORE="$COMMANDS_CORE $(basename "$file" ".sh")"
+  fi
+done
+
+COMMANDS_USER=""
+for file in "$DIR_JIM_SCRIPTS"/*.sh
+do
+  if [ "$COMMANDS_USER" == "" ]
+  then
+    COMMANDS_USER="$(basename "$file" ".sh")"
+  else
+    COMMANDS_USER="$COMMANDS_USER $(basename "$file" ".sh")"
+  fi
+done
 
 echo ""
 
