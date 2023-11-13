@@ -41,15 +41,6 @@ elif [ -v DIR_JIM_SCRIPTS ] && [ -e "$DIR_JIM_SCRIPTS/$COMMAND.sh" ]; then
   # shellcheck disable=SC2097
   DIR_JIM_SCRIPTS=$DIR_JIM_SCRIPTS DIR_CORE=$EXEC_PATH "$DIR_JIM_SCRIPTS/$COMMAND.sh" "$@"
 # check core node scripts
-elif [ -e "$EXEC_PATH/modules/$COMMAND.js" ]; then
-  setNodeVersion
-  shift
-  node "$EXEC_PATH/modules/$COMMAND.js" "$@"
-# check user defined node scripts
-elif [ -v DIR_JIM_SCRIPTS ] && [ -e "$DIR_JIM_SCRIPTS/$COMMAND.js" ]; then
-  setNodeVersion
-  shift
-  node "$DIR_JIM_SCRIPTS/$COMMAND.js" "$@"
 elif [ "$COMMAND" == "" ]; then
   DIR_JIM_SCRIPTS=$DIR_JIM_SCRIPTS DIR_CORE=$EXEC_PATH "$EXEC_PATH/modules/info.sh" "$@"
 else
