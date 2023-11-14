@@ -54,7 +54,7 @@ composer require --dev pnodev/jim-core
 You can provide project-specific configuration with a `.jimrc` file:
 
 ```bash
-NODE_VERSION=16
+NODE_VERSION=20
 DIR_JIM_SCRIPTS=./jim-scripts
 ```
 | Variable          | Description                                                                                                                                                                                                                                                     |
@@ -62,9 +62,13 @@ DIR_JIM_SCRIPTS=./jim-scripts
 | `NODE_VERSION`    | if you set the node-version, jim will make sure to set the correct version via [nvm](https://github.com/nvm-sh/nvm) before executing node commands. This is especially useful if you are switching a lot between projects that require different node versions. |
 | `DIR_JIM_SCRIPTS` | Makes node- or shell-scripts at the specified location available as jim-commands.                                                                                                                                                                               |
 
+You can add more project-specific variables here. All variables defined in `.jimrc` will be exposed to the commands,
+so you can use them in your scripts. You could e.g. add variables to define the path to your JavaScript files and
+use it inside a esbuild-task.
+
 ## Writing custom commands
 
-Custom commands can be written as node- or shell scripts. The jim-runtime provides you with the following helpers for writing your scripts in a consistent manner:
+Custom commands can be written as shell scripts. The jim-runtime provides you with the following helpers for writing your scripts in a consistent manner:
 
 ### Environment Variables
 
@@ -74,6 +78,9 @@ The following environment variables will be made available for your commands:
 |:------------------|:------------------------------------|
 | `DIR_JIM_SCRIPTS` | The path to your jim-scripts folder |
 | `DIR_CORE`        | The path to your jim-core package   |
+
+> **Note**
+> Additionally, all variables you defined in `.jimrc` will be available as well.
 
 ### Utility functions
 
@@ -120,6 +127,58 @@ then
   _log "✓ update finished" "$COLOR_YELLOW"
   echo ""
 fi
+```
+
+#### _box
+
+The `_box` function will display a given string inside a box:
+
+```bash
+_box "I'm in a box"
+```
+
+```
+┌──────────────┐
+│ I'm in a box │
+└──────────────┘
+```
+
+#### _invoke
+
+The `_invoke` command can be used to start another jim-task as a subtask. E.g. if you have a `build`-task that should
+start both the `build:css`- and `build:js`-tasks, you could do the following:
+
+```bash
+source "${DIR_CORE}/utils.sh"
+
+setNodeVersion
+
+_invoke build:css
+_invoke build:js
+```
+
+#### _announceTaskStart
+
+Pre-formatted log for announcing that your task started.
+
+```bash
+_announceTaskStart "Building CSS"
+```
+
+```
+[jim] 🚧 Building CSS
+```
+
+#### _announceTaskEnd
+
+Pre-formatted log for announcing that your task finished.
+
+```bash
+_announceTaskEnd "CSS built in ${PATH_CSS_OUT}"
+```
+
+```
+[jim] 💪 CSS built in Resources/Public/Css/main.min.css
 ```
 
 #### setNodeVersion
