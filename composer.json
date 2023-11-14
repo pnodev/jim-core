@@ -1,7 +1,7 @@
 {
   "name": "pnodev/jim-core",
   "description": "A cli task runner",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "type": "library",
   "license": "MIT",
   "authors": [
