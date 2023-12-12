@@ -29,15 +29,18 @@ do
 done
 
 COMMANDS_USER=""
-for file in "$DIR_JIM_SCRIPTS"/*.sh
-do
-  if [ "$COMMANDS_USER" == "" ]
-  then
-    COMMANDS_USER="$(basename "$file" ".sh")"
-  else
-    COMMANDS_USER="$COMMANDS_USER $(basename "$file" ".sh")"
-  fi
-done
+if [ "$DIR_JIM_SCRIPTS" != "" ] && [ -d "$DIR_JIM_SCRIPTS" ]
+then
+  for file in "$DIR_JIM_SCRIPTS"/*.sh
+  do
+    if [ "$COMMANDS_USER" == "" ]
+    then
+      COMMANDS_USER="$(basename "$file" ".sh")"
+    else
+      COMMANDS_USER="$COMMANDS_USER $(basename "$file" ".sh")"
+    fi
+  done
+fi
 
 echo ""
 
@@ -48,14 +51,17 @@ do
   echo -e "${COLOR_CYAN}  - ${COMMAND}${COLOR_RESET}"
 done
 
-echo ""
-echo -e " User installed commands:"
+if [ "$DIR_JIM_SCRIPTS" != "" ] && [ -d "$DIR_JIM_SCRIPTS" ]
+then
+  echo ""
+  echo -e " User installed commands:"
 
-for COMMAND in $COMMANDS_USER
-do
-  echo -e "${COLOR_CYAN}  - ${COMMAND}${COLOR_RESET}"
-done
-echo ""
+  for COMMAND in $COMMANDS_USER
+  do
+    echo -e "${COLOR_CYAN}  - ${COMMAND}${COLOR_RESET}"
+  done
+  echo ""
+fi
 
 echo " Used node version:"
 if [ ! -v NODE_VERSION ]; then
