@@ -29,7 +29,7 @@ do
 done
 
 COMMANDS_USER=""
-if [ "$DIR_JIM_SCRIPTS" != "" ]
+if [ "$DIR_JIM_SCRIPTS" != "" ] && [ -d "$DIR_JIM_SCRIPTS" ]
 then
   for file in "$DIR_JIM_SCRIPTS"/*.sh
   do
@@ -51,7 +51,7 @@ do
   echo -e "${COLOR_CYAN}  - ${COMMAND}${COLOR_RESET}"
 done
 
-if [ "$DIR_JIM_SCRIPTS" != "" ]
+if [ "$DIR_JIM_SCRIPTS" != "" ] && [ -d "$DIR_JIM_SCRIPTS" ]
 then
   echo ""
   echo -e " User installed commands:"
@@ -60,11 +60,6 @@ then
   do
     echo -e "${COLOR_CYAN}  - ${COMMAND}${COLOR_RESET}"
   done
-  echo ""
-else
-  echo ""
-  echo -e " User installed commands:"
-  echo -e "${COLOR_CYAN}  - No path specified!${COLOR_RESET}"
   echo ""
 fi
 
