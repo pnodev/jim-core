@@ -29,15 +29,18 @@ do
 done
 
 COMMANDS_USER=""
-for file in "$DIR_JIM_SCRIPTS"/*.sh
-do
-  if [ "$COMMANDS_USER" == "" ]
-  then
-    COMMANDS_USER="$(basename "$file" ".sh")"
-  else
-    COMMANDS_USER="$COMMANDS_USER $(basename "$file" ".sh")"
-  fi
-done
+if [ "$DIR_JIM_SCRIPTS" != "" ]
+then
+  for file in "$DIR_JIM_SCRIPTS"/*.sh
+  do
+    if [ "$COMMANDS_USER" == "" ]
+    then
+      COMMANDS_USER="$(basename "$file" ".sh")"
+    else
+      COMMANDS_USER="$COMMANDS_USER $(basename "$file" ".sh")"
+    fi
+  done
+fi
 
 echo ""
 
