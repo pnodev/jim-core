@@ -51,14 +51,22 @@ do
   echo -e "${COLOR_CYAN}  - ${COMMAND}${COLOR_RESET}"
 done
 
-echo ""
-echo -e " User installed commands:"
+if [ "$DIR_JIM_SCRIPTS" != "" ]
+then
+  echo ""
+  echo -e " User installed commands:"
 
-for COMMAND in $COMMANDS_USER
-do
-  echo -e "${COLOR_CYAN}  - ${COMMAND}${COLOR_RESET}"
-done
-echo ""
+  for COMMAND in $COMMANDS_USER
+  do
+    echo -e "${COLOR_CYAN}  - ${COMMAND}${COLOR_RESET}"
+  done
+  echo ""
+else
+  echo ""
+  echo -e " User installed commands:"
+  echo -e "${COLOR_CYAN}  - No path specified!${COLOR_RESET}"
+  echo ""
+fi
 
 echo " Used node version:"
 if [ ! -v NODE_VERSION ]; then
