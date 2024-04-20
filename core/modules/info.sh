@@ -16,6 +16,7 @@ echo -e "$COLOR_BOLD$COLOR_BLUE        \______|        \/   $COLOR_RESET"
 echo ""
 
 echo -e " Installed Version: ${COLOR_CYAN}$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' "${SCRIPT_DIR}"/../../package.json)${COLOR_RESET}"
+echo -e " Using Runtime in: ${COLOR_CYAN}$DIR_CORE${COLOR_RESET}"
 
 COMMANDS_CORE=""
 for file in "$EXEC_PATH"/modules/*.sh
