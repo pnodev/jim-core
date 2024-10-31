@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.pno.dev:jimcli/jim-core.git"
+    "url": "git@github.com:pnodev/jim-core.git"
   },
   "author": "Philipp Nowinski",
   "license": "MIT"
