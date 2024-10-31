@@ -4,6 +4,8 @@ source "$EXEC_PATH/utils.sh"
 SOURCE_FILE="$HOME/.jim.sources"
 SOURCE_FOLDER="$HOME/.jim-modules"
 
+source "$EXEC_PATH/spinner.sh"
+
 if [ ! -d "$SOURCE_FOLDER" ]; then
   mkdir "$SOURCE_FOLDER"
 fi
@@ -16,10 +18,13 @@ read -ra newarr <<< "$2"
 MODULE="${newarr[0]}"
 VERSION="${newarr[1]}"
 
+start_spinner 'Installing...'
+
 cd "$SOURCE_FOLDER" || exit
 if [ -d "$MODULE" ]; then
   INSTALLED_VERSION=$(grep -Po "(?<=VERSION=)[^=]+(?=)" < "$MODULE/jim.module")
   if [ "$INSTALLED_VERSION" != "$VERSION" ]; then
+    stop_spinner $?
     if _ask "${MODULE} is already installed in version ${INSTALLED_VERSION}. Do you want to replace it?"
     then
       rm -rf "$MODULE"
@@ -36,7 +41,6 @@ do
   git clone --depth 1 --branch "$VERSION" "${p}/${MODULE}.git" &> /dev/null
   # shellcheck disable=SC2181
   if [ $? -ne 0 ]; then
-    _log "Skip $p"
     break
   fi
   if [ ! -e "$MODULE/jim.module" ]; then
@@ -44,4 +48,8 @@ do
     rm -rf "$MODULE"
     exit 1
   fi
+  rm -rf "$MODULE/.git"
+  chmod +x "$MODULE/jim.sh"
 done < "$SOURCE_FILE"
+
+stop_spinner $?
