@@ -30,6 +30,10 @@ You can write your own commands as node- or shell-scripts and make them availabl
 
 You can install the jim-command by executing the `install.sh` script inside the repository. You only need to do this once.
 
+```bash
+curl -o- https://raw.githubusercontent.com/pnodev/jim-core/refs/heads/main/install.sh | bash
+```
+`
 ### jim-core
 
 Depending on your project, you can install jim-core with the following commands:
