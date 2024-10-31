@@ -33,7 +33,7 @@ You can install the jim-command by executing the `install.sh` script inside the 
 ```bash
 curl -o- https://raw.githubusercontent.com/pnodev/jim-core/refs/heads/main/install.sh | bash
 ```
-`
+
 ### jim-core
 
 Depending on your project, you can install jim-core with the following commands:
